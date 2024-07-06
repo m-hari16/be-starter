@@ -6,8 +6,9 @@ const UserCredential = db.model(
   new mongoose.Schema({
     email: { type: String, required: true },
     password: { type: String, required: true },
+    e_id: { type: String },
     isActive: { type: Boolean, required: true },
-    type: { type: String },
+    credentialType: { type: String },
     createdAt: { type: Date },
     updatedAt: { type: Date },
   }),

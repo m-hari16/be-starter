@@ -16,7 +16,7 @@ export const errorHandler = (err, req, res, next) => {
   let message = err.message;
 
   if (status === 500) {
-    console.log("DEBUG: ", message);
+    console.trace(message);
     message = "Internal Server Error";
   }
 
