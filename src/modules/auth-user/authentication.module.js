@@ -27,7 +27,7 @@ const signin = async (body) => {
 
   const identityUser = {
     e_id: profile.e_id,
-    fullName: `${profile.firstName} ${profile.lastName}`,
+    fullName: profile.fullName,
     gender: profile.gender,
     profileType: profile.profileType,
   };

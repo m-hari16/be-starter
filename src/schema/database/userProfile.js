@@ -6,8 +6,7 @@ const UserProfile = db.model(
   new mongoose.Schema({
     e_id: { type: String, required: true },
     isActive: { type: Boolean, required: true },
-    firstName: { type: String, required: true },
-    lastName: { type: String, default: "" },
+    fullName: { type: String, required: true },
     email: { type: String, default: "" },
     phoneNumber: { type: String, default: "" },
     homeAddress: { type: String, default: "" },
