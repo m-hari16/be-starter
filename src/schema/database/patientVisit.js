@@ -14,7 +14,7 @@ const PatientVisit = db.model(
     },
     treatment: Array,
     price: {
-      price_total: { type: Number },
+      priceTotal: { type: Number },
     },
     isActive: { type: Boolean, required: true },
     createdBy: {
