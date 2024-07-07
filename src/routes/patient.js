@@ -37,7 +37,7 @@ routes.get("/latest-condition", authValidator, async (req, res, next) => {
   }
 });
 
-routes.get("/history-visit/:e_id", async (req, res, next) => {
+routes.get("/history-visit/:e_id", authValidator, async (req, res, next) => {
   try {
     const result = await historyPatientVisit(req.params.e_id);
     return res.status(200).json(baseSuccessResponse(result));
