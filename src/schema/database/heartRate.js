@@ -4,6 +4,7 @@ import db from "../../config/main_db";
 const HeartRate = db.model(
   "HeartRate",
   new mongoose.Schema({
+    e_id: { type: String },
     heartRate: {type: Number},
     isActive: { type: Boolean, required: true },
     createdBy: {

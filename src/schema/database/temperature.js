@@ -4,6 +4,7 @@ import db from "../../config/main_db";
 const Temperature = db.model(
   "Temperature",
   new mongoose.Schema({
+    e_id: { type: String },
     temperature: {type: Number},
     isActive: { type: Boolean, required: true },
     createdBy: {
