@@ -12,7 +12,7 @@ export const eIdGen = (code) => {
     ADMIN: "001",
   };
 
-  const today = dayjs().format("YYMMDD");
+  const today = dayjs().format("YYMMDDHHmmss");
   const timeStamp = dayjs().unix().toString().slice(5);
 
   return `${prefixApp}-${today}${identityType[code]}${timeStamp}`;

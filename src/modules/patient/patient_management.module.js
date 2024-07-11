@@ -1,4 +1,5 @@
 import { eIdGen } from "../../common/idGenerator";
+import { getRandomInt } from "../../common/randomInt";
 import { validationErrorHandler } from "../../common/validationHandler";
 import PatientCondition from "../../schema/database/patientCondition";
 import PatientVisit from "../../schema/database/patientVisit";
@@ -49,25 +50,24 @@ const listPatient = async () => {
 };
 
 const conditionPatient = async () => {
-  const data = await PatientCondition.find(
-    { isActive: true },
-    { _id: 0 },
-    { updatedAt: -1 }
-  ).lean();
+  const data = await PatientCondition.find({ isActive: true }).lean();
 
-  return data.map((item) => ({
-    e_id: item.e_id,
-    patientProfile: item.patientProfile,
-    latestTreatment: item?.latestTreatment || "",
-    latestBloodPressure: item?.latestBloodPressure || null,
-    latestHeartRate: item?.latestHeartRate || null,
-    latestBloodGlucose: item?.latestBloodGlucose || null,
-    latestTemperature: item?.latestTemperature || null,
-    latestBloodOxygen: item?.latestBloodOxygen || null,
-    isConnectedDevice: item.isConnectedDevice,
-    createdAt: item.createdAt,
-    updatedAt: item.updatedAt,
-  }));
+  return data
+    .map((item) => ({
+      e_id: item.e_id,
+      patientProfile: item.patientProfile,
+      latestTreatment: item?.latestTreatment || "",
+      latestBloodPressure: item?.latestBloodPressure || null,
+      latestHeartRate: item?.latestHeartRate || null,
+      latestBloodGlucose: item?.latestBloodGlucose || null,
+      latestTemperature: item?.latestTemperature || null,
+      latestBloodOxygen: item?.latestBloodOxygen || null,
+      isConnectedDevice: item.isConnectedDevice,
+      createdAt: item.createdAt,
+      updatedAt: item.updatedAt,
+      randomVal: getRandomInt(1, 999),
+    }))
+    .sort((a, b) => a.randomVal - b.randomVal);
 };
 
 const addPatientVisit = async (body) => {};
