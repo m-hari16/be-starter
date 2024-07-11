@@ -79,10 +79,84 @@ const historyPatientVisit = async (e_id) => {
   }).lean();
 };
 
+const patientConditionReport = async () => {
+  const report = await PatientCondition.aggregate([
+    {
+      $facet: {
+        high: [{ $match: { latestRiskStatus: "HIGH" } }, { $count: "count" }],
+        moderate: [
+          { $match: { latestRiskStatus: "MODERATE" } },
+          { $count: "count" },
+        ],
+        low: [{ $match: { latestRiskStatus: "LOW" } }, { $count: "count" }],
+        normal: [
+          { $match: { latestRiskStatus: "NORMAL" } },
+          { $count: "count" },
+        ],
+      },
+    },
+    {
+      $project: {
+        high: { $arrayElemAt: ["$high.count", 0] },
+        moderate: { $arrayElemAt: ["$moderate.count", 0] },
+        low: { $arrayElemAt: ["$low.count", 0] },
+        normal: { $arrayElemAt: ["$normal.count", 0] },
+      },
+    },
+  ]);
+
+  return {
+    high: report?.[0]?.high || 0,
+    moderate: report?.[0]?.moderate || 0,
+    low: report?.[0]?.low || 0,
+    normal: report?.[0]?.normal || 0,
+  };
+};
+
+const profileUserReport = async () => {
+  const report = await UserProfile.aggregate([
+    {
+      $facet: {
+        patient: [{ $match: { profileType: "PATIENT" } }, { $count: "count" }],
+        doctor: [{ $match: { profileType: "DOCTOR" } }, { $count: "count" }],
+        male: [
+          { $match: { profileType: "PATIENT", gender: "M" } },
+          { $count: "count" },
+        ],
+        female: [
+          { $match: { profileType: "PATIENT", gender: "F" } },
+          { $count: "count" },
+        ],
+      },
+    },
+    {
+      $project: {
+        patient: { $arrayElemAt: ["$patient.count", 0] },
+        doctor: { $arrayElemAt: ["$doctor.count", 0] },
+        male: { $arrayElemAt: ["$male.count", 0] },
+        female: { $arrayElemAt: ["$female.count", 0] },
+      },
+    },
+  ]);
+
+  return {
+    doctor: {
+      total: report?.[0]?.doctor || 0,
+    },
+    patient: {
+      total: report?.[0]?.patient || 0,
+      male: report?.[0]?.male || 0,
+      female: report?.[0]?.female || 0,
+    },
+  };
+};
+
 export {
   addPatient,
   listPatient,
   conditionPatient,
   addPatientVisit,
   historyPatientVisit,
+  patientConditionReport,
+  profileUserReport,
 };

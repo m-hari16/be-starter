@@ -5,7 +5,7 @@ const BloodOxygen = db.model(
   "BloodOxygen",
   new mongoose.Schema({
     e_id: { type: String },
-    blood_oxygen: {type: Number},
+    bloodOxygen: {type: Number},
     isActive: { type: Boolean, required: true },
     createdBy: {
       e_id: { type: String, default: "" },
